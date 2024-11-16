@@ -21,42 +21,73 @@ import { chainIdHexHL } from './hl.js'
     }
 
     const elements = {
-        button: {
-            connect: {
-                async click(e) {
-                    try {
-                        const addresses = await walletConnect()
-                        // const signature = await window.ethereum.request({
-                        //     method: 'personal_sign',
-                        //     params: [
-                        //         loginMessage,
-                        //         addresses[0],
-                        //     ],
-                        // })
-                        // TODO: Verify signature
+        navbar: {
+            button: {
+                connect: {
+                    async click(e) {
+                        try {
+                            const addresses = await walletConnect()
+                            // const signature = await window.ethereum.request({
+                            //     method: 'personal_sign',
+                            //     params: [
+                            //         loginMessage,
+                            //         addresses[0],
+                            //     ],
+                            // })
+                            // TODO: Verify signature
 
-                        address = addresses[0]
-                        elements.input.address.element.value = address
-                        elements.button.copy.element.disabled = false
-                    } catch (e) {
-                        console.log('Wallet Connect Error', e)
+                            address = addresses[0]
+                            elements.input.address.element.value = address
+                            elements.button.copy.element.disabled = false
+                        } catch (e) {
+                            console.log('Wallet Connect Error', e)
+                        }
+                    },
+                },
+                copy: {
+                    async click(e) { navigator.clipboard.writeText(elements.input.address.element.value) }
+                }
+            },
+            input: {
+                address: {},
+            },
+        },
+        burn: {
+            button: {
+                burn: {
+                    async click(e) {
+
                     }
                 },
             },
-            copy: {
-                async click(e) { navigator.clipboard.writeText(elements.input.address.element.value) }
-            }
         },
-        input: {
-            address: {},
+        mint: {
+            button: {
+                burn: {
+                    async click(e) {
+
+                    }
+                },
+            },
+        },
+        hlBridge: {
+            button: {
+                burn: {
+                    async click(e) {
+
+                    }
+                },
+            },
         },
     }
 
-    for (let tag in elements) {
-        for (let id in elements[tag]) {
-            const o = elements[tag][id]
-            o.element = document.getElementById(id)
-            if (tag === 'button') o.element.addEventListener('click', o.click)
+    for (let area in elements) {
+        for (let tag in elements[area]) {
+            for (let id in elements[area][tag]) {
+                const o = elements[area][tag][id]
+                o.element = document.getElementById(id)
+                if (tag === 'button') o.element.addEventListener('click', o.click)
+            }
         }
     }
 })()

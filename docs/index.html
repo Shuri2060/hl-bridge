@@ -24,5 +24,30 @@
     </div>
     <div class="main">
         <h1>Hyperliquid CCTP Bridge</h1>
+        <details class="step" open>
+            <summary>Step 1: Burn on Source Chain</summary>
+            <div class="details">
+                <div>
+                    <button id="burn" class="login red big"><b>BURN</b></button>
+                    <select class="big" id="sourceChain">
+                        <option value="ETHEREUM">Ethereum</option>
+                        <option value="AVALANCHE">Avalanche</option>
+                        <option value="OP">OP</option>
+                        <option value="NOBLE">Noble</option>
+                        <option value="SOLANA">Solana</option>
+                        <option value="BASE">Base</option>
+                        <option value="POLYGON" selected>Polygon</option>
+                    </select>
+                </div>
+            </div>
+        </details>
+        <details class="step" open>
+            <summary>Step 2: Mint on Destination Chain</summary>
+            <div class="details">
+                <div>
+                    <button id="mint" class="login green big"><b>MINT</b></button>
+                </div>
+            </div>
+        </details>
     </div>
 </body></html>
