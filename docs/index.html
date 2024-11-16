@@ -4,14 +4,26 @@
     <!-- <link rel="icon" href="favicon.ico"/> -->
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="theme-color" content="#03251F"/>
-    <meta name="description" content="Something"/>
+    <meta name="description" content="Hyperliquid CCTP Bridge"/>
 
     <link rel="stylesheet" href="master.css">
-    <title>Something</title>
+    <title>Hyperliquid CCTP Bridge</title>
     <script type="module" src="index.js"></script>
 </head>
 
 <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <h1>meow?</h1>
+    <div class="topnav">
+        <a class="active" href="index.html">Home</a>
+        <a href="page1.html">Page 1</a>
+        <a href="page2.html">Page 2</a>
+        <div class="connect">
+            <button id="connect" class="login big">Connect</button>
+            <input id="address" class="big" type="text" size="42" minlength="42" maxlength="42" disabled value="Disconnected">
+            <button id="copy" class="big" disabled>Copy</button>
+        </div>
+    </div>
+    <div class="main">
+        <h1>Hyperliquid CCTP Bridge</h1>
+    </div>
 </body></html>
