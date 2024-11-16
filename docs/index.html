@@ -16,20 +16,22 @@
     <div class="topnav">
         <a class="active" href="index.html">Bridge</a>
         <a href="swap.html">Swap</a>
-        <div class="connect">
-            <button id="connect" class="login big">Connect</button>
-            <input id="address" class="big" type="text" size="42" minlength="42" maxlength="42" disabled value="Disconnected">
-            <button id="copy" class="big" disabled>Copy</button>
-        </div>
     </div>
     <div class="main">
         <h1>Hyperliquid CCTP Bridge</h1>
+        <p>Currently only supports one-way bridging to Hyperliquid L1.</p>
         <details class="step" open>
-            <summary>Step 1: Burn on Source Chain</summary>
+            <summary>Step 1: CCTP Burn on Source Chain</summary>
             <div class="details">
                 <div>
-                    <button id="burn" class="login red big"><b>BURN</b></button>
-                    <select class="big" id="sourceChain">
+                    <button id="sourceConnect" class="login blue big">Connect</button>
+                    <input id="sourceAddress" class="big" type="text" size="42" minlength="42" maxlength="42" disabled placeholder="Disconnected">
+                    <button id="sourceCopy" class="big" disabled>Copy</button>
+                </div>
+                <div style="height: 4px;"></div>
+                <div>
+                    <input id="burnAmount" class="big" style="width: 20ch;" type="number" placeholder="USDC">
+                    <select id="sourceChain" class="big">
                         <option value="ETHEREUM">Ethereum</option>
                         <option value="AVALANCHE">Avalanche</option>
                         <option value="OP">OP</option>
@@ -39,13 +41,30 @@
                         <option value="POLYGON" selected>Polygon</option>
                     </select>
                 </div>
+                <div style="height: 4px;"></div>
+                <button id="burn" class="login red big"><b>CCTP BURN</b></button>
             </div>
         </details>
         <details class="step" open>
-            <summary>Step 2: Mint on Destination Chain</summary>
+            <summary>Step 2: CCTP Mint on Destination Chain</summary>
             <div class="details">
                 <div>
-                    <button id="mint" class="login green big"><b>MINT</b></button>
+                    <button id="destinationConnect" class="login blue big">Connect</button>
+                    <input id="destinationAddress" class="big" type="text" size="42" minlength="42" maxlength="42" disabled placeholder="Disconnected">
+                    <button id="destinationCopy" class="big" disabled>Copy</button>
+                </div>
+                <div style="height: 4px;"></div>
+                <div>
+                    <button id="mint" class="login green big"><b>CCTP MINT</b></button>
+                </div>
+            </div>
+        </details>
+        <details class="step" open>
+            <summary>Step 3: Bridge to Hyperliquid L1</summary>
+            <div class="details">
+                <div>
+                    <input id="hlAmount" class="big" style="width: 20ch;" type="number" placeholder="USDC">
+                    <button id="hlBridge" class="login green big"><b>HL BRIDGE</b></button>
                 </div>
             </div>
         </details>

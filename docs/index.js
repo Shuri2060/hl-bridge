@@ -21,9 +21,9 @@ import { chainIdHexHL } from './hl.js'
     }
 
     const elements = {
-        navbar: {
+        burn: {
             button: {
-                connect: {
+                sourceConnect: {
                     async click(e) {
                         try {
                             const addresses = await walletConnect()
@@ -37,46 +37,76 @@ import { chainIdHexHL } from './hl.js'
                             // TODO: Verify signature
 
                             address = addresses[0]
-                            elements.input.address.element.value = address
-                            elements.button.copy.element.disabled = false
+                            elements.burn.input.sourceAddress.element.value = address
+                            elements.burn.button.sourceCopy.element.disabled = false
                         } catch (e) {
                             console.log('Wallet Connect Error', e)
                         }
                     },
                 },
-                copy: {
-                    async click(e) { navigator.clipboard.writeText(elements.input.address.element.value) }
-                }
-            },
-            input: {
-                address: {},
-            },
-        },
-        burn: {
-            button: {
+                sourceCopy: {
+                    async click(e) { navigator.clipboard.writeText(elements.burn.input.sourceAddress.element.value) }
+                },
                 burn: {
                     async click(e) {
-
+                        console.log('BURN')
                     }
                 },
             },
+            input: {
+                sourceAddress: {},
+                burnAmount: {},
+            },
+            select: {
+                sourceChain: {}
+            }
         },
         mint: {
             button: {
-                burn: {
+                destinationConnect: {
                     async click(e) {
+                        try {
+                            const addresses = await walletConnect()
+                            // const signature = await window.ethereum.request({
+                            //     method: 'personal_sign',
+                            //     params: [
+                            //         loginMessage,
+                            //         addresses[0],
+                            //     ],
+                            // })
+                            // TODO: Verify signature
 
+                            address = addresses[0]
+                            elements.mint.input.destinationAddress.element.value = address
+                            elements.mint.button.destinationCopy.element.disabled = false
+                        } catch (e) {
+                            console.log('Wallet Connect Error', e)
+                        }
+                    },
+                },
+                destinationCopy: {
+                    async click(e) { navigator.clipboard.writeText(elements.mint.input.destinationAddress.element.value) }
+                },
+                mint: {
+                    async click(e) {
+                        console.log('MINT')
                     }
                 },
+            },
+            input: {
+                destinationAddress: {},
             },
         },
         hlBridge: {
             button: {
-                burn: {
+                hlBridge: {
                     async click(e) {
 
                     }
                 },
+            },
+            input: {
+                hlAmount: {},
             },
         },
     }
