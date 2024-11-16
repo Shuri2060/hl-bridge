@@ -1,25 +1,16 @@
 /** @import {} from "../global.d.ts" */
-// import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.2/ethers.min.js' // https://docs.ethers.org/v6/getting-started
-;
+import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.2/ethers.min.js' // https://docs.ethers.org/v6/getting-started
+import CHAINS from './chains.js'
+import { chainIdHex } from './utils.js'
+import { chainIdHexHL } from './hl.js'
+    ;
 (() => {
     let IS_MAINNET = false
-
-    const CHAIN_IDS = {
-        false: 421614,
-        true: 42161,
-    }
-
     const loginMessage = `test login message ${Date.now()}`
-
     let address = undefined
 
-    function chainIdHex(chainId) { return `0x${chainId.toString(16)}` }
-    function chainIdHexHL(isMainnet) { return chainIdHex(CHAIN_IDS[IS_MAINNET]) }
-
-    async function walletConnect(chainId) {
-        const addresses = await window.ethereum.request({ method: 'eth_requestAccounts' })
-        if (window.ethereum.networkVersion !== chainId) await switchChain(chainId)
-        return addresses
+    async function walletConnect() {
+        return await window.ethereum.request({ method: 'eth_requestAccounts' })
     }
 
     async function switchChain(chainId) {
@@ -34,14 +25,14 @@
             connect: {
                 async click(e) {
                     try {
-                        const addresses = await walletConnect(CHAIN_IDS[IS_MAINNET])
-                        const signature = await window.ethereum.request({
-                            method: 'personal_sign',
-                            params: [
-                                loginMessage,
-                                addresses[0],
-                            ],
-                        })
+                        const addresses = await walletConnect()
+                        // const signature = await window.ethereum.request({
+                        //     method: 'personal_sign',
+                        //     params: [
+                        //         loginMessage,
+                        //         addresses[0],
+                        //     ],
+                        // })
                         // TODO: Verify signature
 
                         address = addresses[0]
