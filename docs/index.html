@@ -49,8 +49,10 @@
                 <button id="burnApprove" class="login red big"><b>APPROVE BURN</b></button>
                 <button id="burn" class="login red big"><b>CCTP BURN</b></button>
                 <div style="height: 12px;"></div>
-                <label id="burnConfirmations" for="burnMeter">Confirmations:</label><br>
-                <meter id="burnMeter" class="big" style="width: 20ch;" value="0" min="0" max="100">0%</meter>
+                <input id="txHash" class="big" type="text" size="66" minlength="66" maxlength="66" disabled placeholder="Burn Transaction Hash"><br>
+                <label id="burnConfirmations" for="burnMeter">Confirmations:</label>
+                <meter id="burnMeter" class="big" style="width: 20ch; padding-top: 20px;" value="0" min="0" max="100">0%</meter>
+                <button id="refreshConfirmations" class="blue"><b>Refresh</b></button>
             </div>
         </details>
         <details class="step" open>

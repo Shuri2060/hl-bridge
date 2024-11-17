@@ -2,7 +2,7 @@
 import CHAINS from './chains.js'
 import { CCTP } from './cctp/cctp.js'
 import { Hyperliquid } from './hl.js'
-    ;
+
 (() => {
     // let IS_MAINNET = false
     const loginMessage = `test login message ${Date.now()}`
@@ -11,6 +11,8 @@ import { Hyperliquid } from './hl.js'
     async function walletConnect() {
         return await window.ethereum.request({ method: 'eth_requestAccounts' })
     }
+
+    let attestationHash = ''
 
     const elements = {
         nav: {
@@ -56,7 +58,7 @@ import { Hyperliquid } from './hl.js'
                     async click(e) {
                         const IS_MAINNET = elements.nav.select.isMainnet.element.value === 'true'
 
-                        const chain = elements.burn.select.sourceChain.element.value
+                        const chain_name = elements.burn.select.sourceChain.element.value
 
                         const mintRecipient = elements.mint.input.destinationAddress.element.value
                         if (mintRecipient.length !== 42) {
@@ -70,14 +72,32 @@ import { Hyperliquid } from './hl.js'
                             console.log('Invalid Amount')
                             return // add error
                         }
+                        const chain = CHAINS[IS_MAINNET][chain_name]
+                        const tx = await CCTP.burn(chain, CHAINS[IS_MAINNET].ARBITRUM.cctp.domain, mintRecipient, amount)
+                        elements.burn.input.txHash.element.value = tx.hash
 
-                        await CCTP.burn(CHAINS[IS_MAINNET][chain], CHAINS[IS_MAINNET].ARBITRUM.cctp.domain, mintRecipient, amount)
+                        const i = setInterval(async () => {
+                            try {
+                                const msgs = await CCTP.messages(IS_MAINNET, chain.cctp.domain, tx.hash)
+                                if (msgs.messages[0].attestation !== 'PENDING') {
+                                    clearInterval(i)
+                                    const messageHash = msgs.messages[0].attestation
+                                    attestationHash = await CCTP.attestation(IS_MAINNET, messageHash)
+                                }
+                            } catch (e) {
+                            }
+                        }, 1000)
+                    }
+                },
+                refreshConfirmations: {
+                    async click(e) {
                     }
                 },
             },
             input: {
                 sourceAddress: {},
                 burnAmount: {},
+                txHash: {},
             },
             select: {
                 sourceChain: {},
@@ -117,7 +137,7 @@ import { Hyperliquid } from './hl.js'
                             return // add error
                         }
 
-                        const messageBody = '?????????????????????????????'
+                        const messageBody = attestationHash
 
                         await CCTP.mint(CHAINS[IS_MAINNET].ARBITRUM, CHAINS[IS_MAINNET][chain], sender, messageBody)
                     }
