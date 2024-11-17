@@ -5,6 +5,15 @@ export const CCTP = {
     async burn(chain, destinationDomain, mintRecipient, amount) {
         console.log(amount, destinationDomain, mintRecipient, chain.cctp.usdc)
         chain.cctp.tokenMessengerContract.burn(amount, destinationDomain, mintRecipient, chain.cctp.usdc)
+
+        // const signature = await window.ethereum.request({
+        //     method: 'personal_sign',
+        //     params: [
+        //         loginMessage,
+        //         addresses[0],
+        //     ],
+        // })
+        // TODO: Verify signature
     },
     async mint(chain, remoteChain, sender, messageBody) {
         console.log(remoteChain.cctp.usdc, sender, messageBody)

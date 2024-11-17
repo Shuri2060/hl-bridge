@@ -5,7 +5,7 @@ import { CCTP } from './cctp/cctp.js'
 import { chainIdHexHL } from './hl.js'
     ;
 (() => {
-    let IS_MAINNET = false
+    // let IS_MAINNET = false
     const loginMessage = `test login message ${Date.now()}`
     let address = undefined
 
@@ -21,20 +21,17 @@ import { chainIdHexHL } from './hl.js'
     }
 
     const elements = {
+        nav: {
+            select: {
+                isMainnet: {},
+            }
+        },
         burn: {
             button: {
                 sourceConnect: {
                     async click(e) {
                         try {
                             const addresses = await walletConnect()
-                            // const signature = await window.ethereum.request({
-                            //     method: 'personal_sign',
-                            //     params: [
-                            //         loginMessage,
-                            //         addresses[0],
-                            //     ],
-                            // })
-                            // TODO: Verify signature
 
                             address = addresses[0]
                             elements.burn.input.sourceAddress.element.value = address
@@ -49,6 +46,8 @@ import { chainIdHexHL } from './hl.js'
                 },
                 burn: {
                     async click(e) {
+                        const IS_MAINNET = elements.nav.select.isMainnet.element.value === 'true'
+
                         const chain = elements.burn.select.sourceChain.element.value
 
                         const mintRecipient = elements.mint.input.destinationAddress.element.value
@@ -87,14 +86,6 @@ import { chainIdHexHL } from './hl.js'
                     async click(e) {
                         try {
                             const addresses = await walletConnect()
-                            // const signature = await window.ethereum.request({
-                            //     method: 'personal_sign',
-                            //     params: [
-                            //         loginMessage,
-                            //         addresses[0],
-                            //     ],
-                            // })
-                            // TODO: Verify signature
 
                             address = addresses[0]
                             elements.mint.input.destinationAddress.element.value = address
@@ -109,6 +100,8 @@ import { chainIdHexHL } from './hl.js'
                 },
                 mint: {
                     async click(e) {
+                        const IS_MAINNET = elements.nav.select.isMainnet.element.value === 'true'
+
                         const chain = elements.burn.select.sourceChain.element.value
 
                         const sender = elements.burn.input.sourceAddress.element.value
