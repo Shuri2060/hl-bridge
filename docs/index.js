@@ -1,7 +1,7 @@
 /** @import {} from "../global.d.ts" */
-import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.2/ethers.min.js' // https://docs.ethers.org/v6/getting-started
 import CHAINS from './chains.js'
 import { chainIdHex } from './utils.js'
+import { CCTP } from './cctp/cctp.js'
 import { chainIdHexHL } from './hl.js'
     ;
 (() => {
@@ -49,7 +49,23 @@ import { chainIdHexHL } from './hl.js'
                 },
                 burn: {
                     async click(e) {
-                        console.log('BURN')
+                        const chain = elements.burn.select.sourceChain.element.value
+
+                        const mintRecipient = elements.mint.input.destinationAddress.element.value
+                        if (mintRecipient.length !== 42) {
+                            console.log('Destination Address not connected')
+                            return // add error
+                        }
+
+                        const amount = parseFloat(elements.burn.input.burnAmount.element.value)
+                        elements.burn.input.burnAmount.element.value = ''
+
+                        if (isNaN(amount) || amount <= 0) {
+                            console.log('Invalid Amount')
+                            return // add error
+                        }
+
+                        await CCTP.burn(CHAINS[IS_MAINNET][chain], CHAINS[IS_MAINNET].ARBITRUM.cctp.domain, mintRecipient, amount)
                     }
                 },
             },
@@ -58,7 +74,11 @@ import { chainIdHexHL } from './hl.js'
                 burnAmount: {},
             },
             select: {
-                sourceChain: {}
+                sourceChain: {},
+            },
+            other: {
+                burnConfirmations: {},
+                burnMeter: {},
             }
         },
         mint: {
@@ -89,7 +109,17 @@ import { chainIdHexHL } from './hl.js'
                 },
                 mint: {
                     async click(e) {
-                        console.log('MINT')
+                        const chain = elements.burn.select.sourceChain.element.value
+
+                        const sender = elements.burn.input.sourceAddress.element.value
+                        if (sender.length !== 42) {
+                            console.log('Source Address not connected')
+                            return // add error
+                        }
+
+                        const messageBody = '?????????????????????????????'
+
+                        await CCTP.mint(CHAINS[IS_MAINNET].ARBITRUM, CHAINS[IS_MAINNET][chain], sender, messageBody)
                     }
                 },
             },
