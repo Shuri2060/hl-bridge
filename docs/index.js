@@ -1,8 +1,6 @@
 /** @import {} from "../global.d.ts" */
 import CHAINS from './chains.js'
-import { chainIdHex } from './utils.js'
 import { CCTP } from './cctp/cctp.js'
-import { chainIdHexHL } from './hl.js'
     ;
 (() => {
     // let IS_MAINNET = false
@@ -11,13 +9,6 @@ import { chainIdHexHL } from './hl.js'
 
     async function walletConnect() {
         return await window.ethereum.request({ method: 'eth_requestAccounts' })
-    }
-
-    async function switchChain(chainId) {
-        await window.ethereum.request({
-            method: "wallet_switchEthereumChain",
-            params: [{ chainId: chainIdHex(chainId) }],
-        })
     }
 
     const elements = {
