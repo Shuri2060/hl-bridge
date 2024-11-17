@@ -1,1 +1,1 @@
-[ "function approve(address spender, uint256 amount) returns (bool)" ]
+[ "function approve(address spender, uint256 amount) returns (bool)", "function transfer(address to, uint amount) returns (bool)" ]

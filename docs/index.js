@@ -1,6 +1,7 @@
 /** @import {} from "../global.d.ts" */
 import CHAINS from './chains.js'
 import { CCTP } from './cctp/cctp.js'
+import { Hyperliquid } from './hl.js'
     ;
 (() => {
     // let IS_MAINNET = false
@@ -128,14 +129,34 @@ import { CCTP } from './cctp/cctp.js'
         },
         hlBridge: {
             button: {
+                // hlBridgeApprove: {
+                //     async click(e) {
+                //         const IS_MAINNET = elements.nav.select.isMainnet.element.value === 'true'
+
+                //         const amount = parseFloat(elements.burn.input.burnAmount.element.value)
+
+                //         if (isNaN(amount) || amount <= 0) {
+                //             console.log('Invalid Amount')
+                //             return // add error
+                //         }
+
+                //         await Hyperliquid.approveBridge(IS_MAINNET, amount)
+                //     }
+                // },
                 hlBridge: {
                     async click(e) {
+                        const IS_MAINNET = elements.nav.select.isMainnet.element.value === 'true'
 
+                        const amount = parseFloat(elements.burn.input.burnAmount.element.value)
+
+                        if (isNaN(amount) || amount <= 0) {
+                            console.log('Invalid Amount')
+                            return // add error
+                        }
+
+                        await Hyperliquid.depositToBridge(IS_MAINNET, amount)
                     }
                 },
-            },
-            input: {
-                hlAmount: {},
             },
         },
     }
