@@ -35,6 +35,22 @@ import { CCTP } from './cctp/cctp.js'
                 sourceCopy: {
                     async click(e) { navigator.clipboard.writeText(elements.burn.input.sourceAddress.element.value) }
                 },
+                burnApprove: {
+                    async click(e) {
+                        const IS_MAINNET = elements.nav.select.isMainnet.element.value === 'true'
+
+                        const chain = elements.burn.select.sourceChain.element.value
+
+                        const amount = parseFloat(elements.burn.input.burnAmount.element.value)
+
+                        if (isNaN(amount) || amount <= 0) {
+                            console.log('Invalid Amount')
+                            return // add error
+                        }
+
+                        await CCTP.approveBurn(CHAINS[IS_MAINNET][chain], amount)
+                    }
+                },
                 burn: {
                     async click(e) {
                         const IS_MAINNET = elements.nav.select.isMainnet.element.value === 'true'
@@ -48,7 +64,6 @@ import { CCTP } from './cctp/cctp.js'
                         }
 
                         const amount = parseFloat(elements.burn.input.burnAmount.element.value)
-                        elements.burn.input.burnAmount.element.value = ''
 
                         if (isNaN(amount) || amount <= 0) {
                             console.log('Invalid Amount')
